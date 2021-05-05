@@ -8,16 +8,21 @@ while directory == False:
 
   directory = input("Please name the folder within your documents directory\n you would like to save your data to. ")
 
-  filePath = f"/users/{getpass.getuser()}/Documents/{directory}/"
+  filePath = f"C:/users/{getpass.getuser()}/Documents/{directory}/"
 
   try:
 
     if os.path.isdir(filePath):
       print('Directory Exists')
 
+    elif not os.path.isdir(filePath):
+      directory = False
+      print("Sorry, that directory doesn't exist.\n")
+
   except:
     directory = False
     print("Sorry, that directory doesn't exist.\n")
+  
 
 
 fileName = False
@@ -28,7 +33,7 @@ while fileName == False:
 
   try:
 
-    if os.path.isfile(fileName): #check if file exists
+    if os.path.isfile(fileName):
 
       overwrite = input('File already exists. Overwrite?' )
       if overwrite == "yes" or "y":
@@ -44,9 +49,6 @@ while fileName == False:
   except:
     fileName = False
     print("Sorry, a problem came up. Please try again.\n")
-  
-  else:
-    print(f"Alright, creating a new file called {fileName}")
 
 
 completePath = filePath+fileName
@@ -55,8 +57,10 @@ username = input("Now then, what is your name? ")
 address = input("What is your address? ")
 phone = input("And finally, what is your phone number? ")
 
+contactInfo = f"{username}, {address}, {phone}"
+
 with open(completePath, "w") as fileHandle:
-  fileHandle.write(f"{username}, {address}, {str.phone}")
+  fileHandle.write(contactInfo)
 
 
 with open(completePath, "r") as file_object:
