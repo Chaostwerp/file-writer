@@ -1,0 +1,66 @@
+import os
+import getpass
+
+
+directory = False
+
+while directory == False:
+
+  directory = input("Please name the folder within your documents directory\n you would like to save your data to. ")
+
+  filePath = f"/users/{getpass.getuser()}/Documents/{directory}/"
+
+  try:
+
+    if os.path.isdir(filePath):
+      print('Directory Exists')
+
+  except:
+    directory = False
+    print("Sorry, that directory doesn't exist.\n")
+
+
+fileName = False
+
+while fileName == False:
+
+  fileName = input("What would you like to call this file? ")
+
+  try:
+
+    if os.path.isfile(fileName): #check if file exists
+
+      overwrite = input('File already exists. Overwrite?' )
+      if overwrite == "yes" or "y":
+        pass
+
+      elif overwrite == "no" or "n":
+        fileName = False
+        print("Alright, then. ")
+
+      else:
+        print("Sorry, didn't quite catch that.\n")
+
+  except:
+    fileName = False
+    print("Sorry, a problem came up. Please try again.\n")
+  
+  else:
+    print(f"Alright, creating a new file called {fileName}")
+
+
+completePath = filePath+fileName
+
+username = input("Now then, what is your name? ")
+address = input("What is your address? ")
+phone = input("And finally, what is your phone number? ")
+
+with open(completePath, "w") as fileHandle:
+  fileHandle.write(f"{username}, {address}, {str.phone}")
+
+
+with open(completePath, "r") as file_object:
+  contents = file_object.read()
+  print(f"Your contact information is: {contents}")
+
+  input()
